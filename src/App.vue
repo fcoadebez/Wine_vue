@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view/>
+
+    <transition name="slide-left">
+      <router-view class="child-view" />
+    </transition>
   </div>
 </template>
 
@@ -24,6 +27,7 @@ html {
   text-align: center;
   width: 100%;
   height: 100%;
+  position: relative;
   color: #2c3e50;
   h1 {
     margin: 0;
@@ -95,5 +99,29 @@ html {
       #810f46
     );
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+.child-view {
+  position: absolute;
+  transition: all 0.5s linear;
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  // opacity: 0;
+  -webkit-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  // opacity: 0;
+  -webkit-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
 }
 </style>

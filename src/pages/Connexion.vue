@@ -20,22 +20,26 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 import router from "../router/index.js";
 
 export default {
   name: "Connexion",
   components: {},
   mounted() {
-    // console.log(this.$route.params);
+    console.log(this.$store);
   },
-  props: ["email"],
   data() {
     return {
       msg: "Connexion",
-      email: this.$route.params.email,
+      // email: "",
       pwd: ""
     };
   },
+  computed: {
+    ...mapState({ email: state => state.signup.email })
+  },
+
   methods: {
     onSubmit() {
       const email = this.email;
