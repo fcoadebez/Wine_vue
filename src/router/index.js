@@ -15,7 +15,8 @@ export default new Router({
     {
       path: '/login',
       name: 'Connexion',
-      component: Connexion
+      component: Connexion,
+      props: true
     }
   ]
 })
