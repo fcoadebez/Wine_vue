@@ -26,9 +26,7 @@ import router from "../router/index.js";
 export default {
   name: "Connexion",
   components: {},
-  mounted() {
-    console.log(this.$store);
-  },
+  mounted() {},
   data() {
     return {
       msg: "Connexion",

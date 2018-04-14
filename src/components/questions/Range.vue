@@ -2,11 +2,9 @@
   <div class="range_container">
     <div class="range">
       <div class="line" ref="line">
-        <div class="step" style=""></div>
-        <div class="step" style=""></div>
-        <div class="step" style=""></div>
-        <div class="step" style=""></div>
-        <div class="step" style=""></div>
+        
+        <div :key="index" v-for="(question,index) in questions" class="step" style=""></div>
+        
         <div class="actual" v-bind:style="{ left: stepSize + 'px' }"></div>
       </div>
     </div>
@@ -14,19 +12,31 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+
 export default {
   name: "Range",
+  props: {
+    // questionNumber: String
+  },
   data() {
     return {
-      step: 2,
+      step: 1,
       stepNumber: 5,
       lineWidth: 0,
-      stepSize: 0
+      stepSize: 0,
+      questionNumber: 0
     };
   },
+  computed: {
+    ...mapState({ questions: state => state.questions.questions })
+  },
   mounted: function() {
+    this.questionNumber = this.$store.state.questions;
+    console.log(this);
+
     this.$data.lineWidth = this.$refs.line.clientWidth;
-    this.$data.stepSize = this.$data.lineWidth / this.$data.stepNumber;
+    this.$data.stepSize = this.$data.lineWidth / this.getQuestions.length;
 
     if (this.$data.step === 0) {
       this.$data.stepSize = this.$data.stepSize * 0 - 12.5;

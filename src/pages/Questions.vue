@@ -3,15 +3,14 @@
     <div class="container">
       <div class="logo">
         <img src="../assets/logo_simple.svg" alt="">
-        
+
       </div>
       <div class="intro">
-        <p>dans l’aventure Wine&Me</p>
         <p>Ces quelques questions permettrons à notre oenologue de sélectionner les bouteilles adaptées à votre palais.</p>
       </div>
-      <Range></Range>
+      <Range :questionNumber="questionsAll"/>
       <div class="question">
-        <transition name="slide-left">
+        <transition>
           <router-view class="child-view" />
         </transition>
       </div>
@@ -20,23 +19,34 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapState } from "vuex";
+import { mapActions } from "vuex";
 import router from "../router/index.js";
 import Range from "@/components/questions/Range";
 
 export default {
   name: "Question",
   components: { Range },
-  mounted() {
-    // console.log(this.$store);
-  },
-  data() {
-    return {};
-  },
-  computed: {},
 
+  data() {
+    return {
+      questionsAll: ""
+    };
+  },
+  created() {
+    this.getQuestions();
+  },
+  computed: {
+    ...mapState({ questions: state => state.questions.questions })
+  },
+  mounted() {
+    // this.questionsAll = this.questions;
+  },
   methods: {
+    ...mapActions({
+      getQuestions: "getQuestions"
+    }),
+
     onSubmit() {}
   }
 };

@@ -1,5 +1,7 @@
 <template>
   <div class="question">
+    <p>Question1</p>
+    <button class="purple">Réponse 1</button>
   </div>
 </template>
 
@@ -27,6 +29,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.question {
+  width: 100%;
+  background: none;
+}
 .logo {
   width: 100%;
   padding-top: 0px;
