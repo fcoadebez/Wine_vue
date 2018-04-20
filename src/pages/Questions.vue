@@ -3,17 +3,16 @@
     <div class="container">
       <div class="logo">
         <img src="../assets/logo_simple.svg" alt="">
-
+        
       </div>
       <div class="intro">
-        <p>Ces quelques questions permettrons à notre oenologue de sélectionner les bouteilles adaptées à votre palais.</p>
+        <p>dans l'aventure Wine&Me</p>
+        <p v-if="$route.params.id == 1">Ces quelques questions permettrons à notre oenologue de sélectionner les bouteilles adaptées à votre palais.</p>
       </div>
       <Range :questionNumber="questionsAll"/>
-      <div class="question">
-        <transition>
-          <router-view class="child-view" />
-        </transition>
-      </div>
+        <!-- <transition name="slide-left"> -->
+          <router-view class="child-view"/>
+        <!-- </transition> -->
     </div>
   </div>
 </template>
@@ -54,25 +53,37 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+html {
+  // background-color: #810f47;
+}
 .question {
-  background-image: linear-gradient(to bottom, #ba3353, #951932, #810f47);
+  font-family: "Source Sans Pro", sans-serif;
+  color: white;
+  height: auto;
+  // background-color: #810f47;
+  .container {
+    // height: auto !important;
+  }
 }
 .logo {
   padding-top: 40px;
   img {
     width: 200px;
   }
+  p {
+    font-size: 17px;
+  }
 }
 .intro {
   p {
     color: white;
     &:nth-child(1) {
-      font-size: 17px;
+      font-size: 19px;
       margin-top: 0;
     }
     &:nth-child(2) {
-      font-size: 14px;
-      padding: 20px 30px;
+      font-size: 15px;
+      padding: 10px 20px;
     }
   }
 }

@@ -1,28 +1,57 @@
 <template>
-  <div class="question">
-    <p>Question1</p>
-    <button class="purple">Réponse 1</button>
+<!-- <transition name="slide-left"> -->
+  <div key="question" class="question">
+    <p class="question_text">{{ getQuestions[$route.params.id-1].question.question }}</p>
+    <!-- <router-link  :to="{ name: 'Question', params: { id: parseInt($route.params.id)+1 }}" > -->
+      <button v-for="(response) in getQuestions[$route.params.id-1].responses" :key="response.id" @click="getResponse(getQuestions[$route.params.id-1].question.id, response.id, parseInt($route.params.id), getQuestions.length)"  class="purple">{{ response.response }}</button>
+    <!-- </router-link> -->
+    
   </div>
+<!-- </transition> -->
 </template>
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
 import router from "../../router/index.js";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "Question",
   components: {},
-  mounted() {
-    // console.log(this.$store);
-  },
+
   data() {
-    return {};
+    return {
+      questionsLength: 0
+    };
   },
-  computed: {},
+  watch: {
+    getQuestions() {
+      this.questionsLength = this.getQuestions;
+    }
+  },
+  mounted() {},
+  computed: {
+    ...mapGetters({
+      getQuestions: "getQuestions"
+    })
+  },
 
   methods: {
-    onSubmit() {}
+    getResponse: (question, response, route, nbQuestions) => {
+      console.log("question", question);
+      console.log("response", response);
+      console.log("route", route);
+      console.log("nbQuestions", nbQuestions);
+      // if (route !== nbQuestions) {
+      //   router.push({
+      //     name: "Question",
+      //     params: { id: route + 1 }
+      //   });
+      // }
+    },
+    onSubmit() {
+      // console.log("ok");
+    }
   }
 };
 </script>
@@ -30,30 +59,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .question {
+  font-family: "Source Sans Pro", sans-serif;
   width: 100%;
+  height: auto;
   background: none;
-}
-.logo {
-  width: 100%;
-  padding-top: 0px;
-  padding-bottom: 30px;
-  img {
-    width: 220px;
+  .question_text {
+    font-weight: 600;
   }
-}
-.bottom {
-  position: absolute;
-  height: 18%;
-  width: 100%;
-  bottom: 0;
-  background-image: url("../../assets/form/bottom.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  a {
+  p {
+    font-size: 20px;
     color: white;
   }
+}
+button {
+  margin-bottom: 15px;
+  text-transform: none !important;
 }
 </style>

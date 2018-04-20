@@ -7,7 +7,10 @@ const state = {
 };
 
 const getters = {
+  getQuestionsLength: state => state.questions.length,
   getQuestions: state => state.questions
+
+  // this.stepSize = -12.5 * getQuestions.length;
 };
 
 const mutations = {

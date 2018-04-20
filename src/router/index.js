@@ -22,10 +22,11 @@ export default new Router({
     },
     {
       path: "/question",
-      name: "Question",
+      name: "Questions",
       component: Questions,
       children: [
         {
+          name: "Question",
           path: ":id",
           component: Question
         }

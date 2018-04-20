@@ -50,7 +50,10 @@ export default {
         })
         .then(function(response) {
           if (response.data.alert.type !== "fail") {
-            console.log("connexion Ok");
+            router.push({
+              name: "Question",
+              params: { id: 1 }
+            });
           }
         })
         .catch(function(error) {
