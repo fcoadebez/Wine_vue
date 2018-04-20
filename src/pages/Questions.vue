@@ -1,5 +1,5 @@
 <template>
-  <div class="form question">
+  <div class="form questions">
     <div class="container">
       <div class="logo">
         <img src="../assets/logo_simple.svg" alt="">
@@ -18,8 +18,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import router from "../router/index.js";
 import Range from "@/components/questions/Range";
 
@@ -56,7 +55,7 @@ export default {
 html {
   // background-color: #810f47;
 }
-.question {
+.questions {
   font-family: "Source Sans Pro", sans-serif;
   color: white;
   height: auto;

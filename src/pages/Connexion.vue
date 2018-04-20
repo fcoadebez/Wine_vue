@@ -6,7 +6,8 @@
       </div>
       <form v-on:submit.prevent="onSubmit">
         <div class="inputs">
-          <input v-model=email type="text" name="email" class="input_form" placeholder="Email">
+          <input v-if="email != ''" v-model=email type="text" name="email" class="input_form" placeholder="Email">
+          <input v-if="email == ''" v-model=localEmail type="text" name="email" class="input_form" placeholder="Email">
           <input v-model=pwd type="password" name="pwd" class="input_form" placeholder="Mot de passe">
         </div>
         <button class="white">Connexion</button>
@@ -20,7 +21,7 @@
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import router from "../router/index.js";
 
 export default {
@@ -30,7 +31,7 @@ export default {
   data() {
     return {
       msg: "Connexion",
-      // email: "",
+      localEmail: "",
       pwd: ""
     };
   },
@@ -39,17 +40,24 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      postUser: "postUser"
+    }),
+
     onSubmit() {
-      const email = this.email;
+      var email = "";
+      this.email != "" ? (email = this.email) : (email = this.localEmail);
+
       const pwd = this.pwd;
 
       axios
         .post(process.env.baseUrl + "admin/api/login", {
-          email: this.email,
+          email: email,
           password: this.pwd
         })
-        .then(function(response) {
+        .then(response => {
           if (response.data.alert.type !== "fail") {
+            this.postUser(response.data.alert.user.id);
             router.push({
               name: "Question",
               params: { id: 1 }
