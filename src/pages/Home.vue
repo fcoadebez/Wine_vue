@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <Home/>
+    <Header />
+    <div class="container">
+      <Title title="Mon Budget" subtitle="Mon budget" />
+
+    </div>
+
   </div>
 </template>
 
@@ -8,10 +13,12 @@
 import { mapActions, mapState } from "vuex";
 import router from "../router/index.js";
 import Header from "@/components/home/Header";
+import Title from "@/components/home/Title";
+import PriceRange from "@/components/home/PriceRange";
 
 export default {
-  name: "Question",
-  components: { Range },
+  name: "Home",
+  components: { Header, Title, PriceRange },
 
   data() {
     return {};
@@ -25,5 +32,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-
+.home {
+  .container {
+    padding: 20px;
+  }
+  width: 100%;
+}
 </style>

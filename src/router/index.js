@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Inscription from "@/pages/Inscription";
 import Connexion from "@/pages/Connexion";
+import Home from "@/pages/Home";
 import Questions from "@/pages/Questions";
 import Question from "@/components/questions/Question";
 
@@ -18,6 +19,12 @@ export default new Router({
       path: "/login",
       name: "Connexion",
       component: Connexion,
+      props: true
+    },
+    {
+      path: "/",
+      name: "Home",
+      component: Home,
       props: true
     },
     {
