@@ -6,7 +6,7 @@
   <div v-else="parseInt($route.params.id) == getQuestions.length + 1" class="question final">
     <p>Merci d’avoir pris le temps de répondre à ces questions, votre profil a été mis à jour.
 Vous pouvez maintenant trouver le vin qui vous correspond.</p>
-    <button class="purple">Wine&Me</button>
+    <button @click="storeUserResponses()" class="purple">Wine&Me</button>
   </div>
 </template>
 
@@ -22,7 +22,8 @@ export default {
 
   data() {
     return {
-      questionsLength: 0
+      questionsLength: 0,
+      responsesUser: ""
     };
   },
   watch: {
@@ -33,13 +34,16 @@ export default {
   mounted() {},
   computed: {
     ...mapGetters({
-      getQuestions: "getQuestions"
+      getQuestions: "getQuestions",
+      getResponses: "getResponses",
+      getUser: "getUser"
     })
   },
 
   methods: {
     ...mapActions({
-      setResponse: "setResponse"
+      setResponse: "setResponse",
+      storeResponses: "storeResponses"
     }),
 
     getResponse(question, response, route, nbQuestions) {
@@ -48,12 +52,27 @@ export default {
         response_id: response
       };
       this.setResponse(responseUser);
-      // if (route !== nbQuestions) {
+
       router.push({
         name: "Question",
         params: { id: route + 1 }
       });
-      // }
+    },
+
+    storeUserResponses() {
+      axios
+        .post(process.env.baseUrl + "admin/api/responses", {
+          responses: this.getResponses,
+          userId: this.getUser
+        })
+        .then(response => {
+          console.log(response);
+          if (response.data.alert.type !== "fail") {
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
