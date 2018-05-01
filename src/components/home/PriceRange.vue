@@ -56,9 +56,6 @@ export default {
 
     this.$el.firstChild.children[1].children[0].children[0].children[0].style.top =
       "60px";
-    console.log(document.getElementsByClassName("vue-slider-tooltip"));
-
-    console.log(this.$el.firstChild.children[1].children[0].children[1]);
   },
   computed: {},
 
@@ -69,21 +66,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .price_range {
-  .vue-slider-component .vue-slider-process {
-    background-image: linear-gradient(
-      to bottom,
-      #ba3353,
-      #ac2a51,
-      #9e214e,
-      #8f184b,
-      #810f47
-    );
-  }
   .container {
     background-color: #f5f5f5;
     border-radius: 5px;
     padding: 8px;
-    margin: 10px 0;
+    margin: 20px 0 40px 0;
     p {
       color: #666666;
       text-align: left;
