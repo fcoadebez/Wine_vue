@@ -53,6 +53,7 @@ html {
       text-transform: uppercase;
     }
     &.red {
+      color: #fff;
       background-image: linear-gradient(
         to bottom,
         #951932,
