@@ -68,6 +68,10 @@ export default {
         .then(response => {
           console.log(response);
           if (response.data.alert.type !== "fail") {
+            router.push({
+              name: "Home",
+              params: { subnav: "all" }
+            });
           }
         })
         .catch(function(error) {

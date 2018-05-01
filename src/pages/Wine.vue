@@ -1,8 +1,10 @@
 <template>
-  <div class="home">
-    <Header />
+  <div class="wine">
+    <div class="header">
+
+    </div>
     <div class="container">
-      <AllWines v-if="$route.params.subnav == 'all'" />
+      
     </div>
 
   </div>
@@ -11,12 +13,10 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import router from "../router/index.js";
-import Header from "@/components/home/Header";
-import AllWines from "@/components/home/search/AllWines";
 
 export default {
   name: "Home",
-  components: { Header, AllWines },
+  components: {},
 
   data() {
     return {};
@@ -30,10 +30,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.home {
-  .container {
-    padding: 20px;
-  }
-  width: 100%;
-}
+
 </style>

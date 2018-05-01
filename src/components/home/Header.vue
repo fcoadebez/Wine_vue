@@ -6,16 +6,26 @@
           <h1>Wine&Me</h1>
         </div>
         <div class="nav">
-          <img class="nav_item active" src="../../assets/header/search.svg" alt="">
-          <img class="nav_item" src="../../assets/header/fav.svg" alt="">
-          <img class="nav_item" src="../../assets/header/account.svg" alt="">
+          <router-link to="/wines/all">
+            <img  v-bind:class="{ active: $route.params.subnav == 'food' || $route.params.subnav == 'all' || $route.params.subnav == 'search' }" class="nav_item" src="../../assets/header/search.svg" alt="">
+          </router-link>
+          <router-link to="/wines/fav">
+            <img  v-bind:class="{ active: $route.params.subnav == 'fav'}" class="nav_item" src="../../assets/header/fav.svg" alt="">
+          </router-link>
+          <router-link to="/account">
+            <img  v-bind:class="{ active: $route.name == 'Account'}" class="nav_item" src="../../assets/header/account.svg" alt="">
+          </router-link>
         </div>
       </div>
-      <div class="sub_nav">
+      <div v-if="$route.params.subnav != 'fav'" class="sub_nav">
         <div class="nav">
-          <span >Avec un plat</span>
-          <span class="active">Toutes occasions</span>
-          <span>Avec un nom</span>
+          <router-link to="/wines/food" v-bind:class="{ active: $route.params.subnav == 'food' }">Avec un plat</router-link>
+        </div>
+        <div class="nav">
+          <router-link to="/wines/all" v-bind:class="{ active: $route.params.subnav == 'all' }">Toutes occasions</router-link>
+        </div>
+        <div class="nav">
+          <router-link to="/wines/search" v-bind:class="{ active: $route.params.subnav == 'search' }">Avec un nom</router-link>
         </div>
       </div>
     </div>
@@ -81,15 +91,22 @@ export default {
   }
   .sub_nav {
     padding: 0px 0 20px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     .nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
       color: white;
-      span {
+      width: 33%;
+      a {
         font-family: "Source Sans Pro", sans-serif;
         font-size: 14px;
-        transition: font-size 0.2s;
+        color: white;
+        text-decoration: none;
+        &::before {
+          content: "";
+          transition: width 0.7s;
+          width: 0px;
+        }
         &.active {
           font-size: 18px;
           font-weight: 600;

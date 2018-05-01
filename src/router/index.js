@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Inscription from "@/pages/Inscription";
 import Connexion from "@/pages/Connexion";
 import Home from "@/pages/Home";
+import Wine from "@/pages/Wine";
 import Questions from "@/pages/Questions";
 import Question from "@/components/questions/Question";
 
@@ -22,9 +23,15 @@ export default new Router({
       props: true
     },
     {
-      path: "/",
+      path: "/wines/:subnav",
       name: "Home",
       component: Home,
+      props: true
+    },
+    {
+      path: "/wine/:id",
+      name: "Wine",
+      component: Wine,
       props: true
     },
     {
