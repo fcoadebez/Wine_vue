@@ -12,9 +12,7 @@
           <p class="localisation">{{localisation}}</p>
         </div>
         <div class="tastes">
-          <div class="taste">Boisé</div>
-          <div class="taste">Fort</div>
-          <div class="taste">Epicé</div>
+          <div v-for="taste in tastes" class="taste">{{taste}}</div>
         </div>
       </div>
       <div class="right inline">
@@ -47,7 +45,6 @@ export default {
   },
   watch: {},
   mounted() {
-    console.log(this.tastes)
   },
   computed: {},
 
@@ -68,7 +65,7 @@ export default {
     box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     padding: 8px;
-    margin: 10px 0;
+    margin: 10px 0 15px 0;
     display: flex;
     justify-content: space-around;
   }
