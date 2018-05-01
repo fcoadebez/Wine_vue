@@ -3,6 +3,7 @@
     <Header />
     <div class="container">
       <Title title="Mon Budget" subtitle="Mon budget" />
+      <PriceRange />
 
     </div>
 
