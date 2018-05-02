@@ -58,6 +58,7 @@ export default {
         .then(response => {
           if (response.data.alert.type !== "fail") {
             this.postUser(response.data.alert.user.id);
+            this.$localStorage.set("token", response.data.alert.token);
             router.push({
               name: "Question",
               params: { id: 1 }

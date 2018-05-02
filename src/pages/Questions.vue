@@ -1,6 +1,7 @@
 <template>
   <div class="form questions">
     <div class="container">
+      <img v-if="this.$route.params.id != 1" @click="backQuestion" class="left_arrow" src="../assets/form/left-arrow.svg" alt="">
       <div class="logo">
         <img src="../assets/logo_simple.svg" alt="">
         
@@ -28,7 +29,8 @@ export default {
 
   data() {
     return {
-      questionsAll: ""
+      questionsAll: "",
+      lastQuestion: ""
     };
   },
   created() {
@@ -38,14 +40,27 @@ export default {
     ...mapState({ questions: state => state.questions.questions })
   },
   mounted() {
-    // this.questionsAll = this.questions;
+    // console.log(this.$localStorage.get("token"));
+  },
+  updated() {
+    if (typeof this.lastQuestion == "array") {
+      this.lastQuestion.splice(0, 1);
+    }
+    // console.log(this.lastQuestion.splice(0, 1));
+    this.lastQuestion = this.$store.state.questions.responseUser;
   },
   methods: {
     ...mapActions({
       getQuestions: "getQuestions"
     }),
 
-    onSubmit() {}
+    backQuestion() {
+      console.log(this.$route);
+      router.push({
+        name: "Question",
+        params: { id: this.$route.params.id - 1 }
+      });
+    }
   }
 };
 </script>
@@ -61,7 +76,13 @@ html {
   height: auto;
   // background-color: #810f47;
   .container {
-    // height: auto !important;
+    position: relative;
+    .left_arrow {
+      position: absolute;
+      width: 40px;
+      top: 50px;
+      left: 30px;
+    }
   }
 }
 .logo {
