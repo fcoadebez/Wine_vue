@@ -21,9 +21,7 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapActions } from "vuex";
-import router from "../router/index.js";
 
 export default {
   name: "Inscription",
@@ -44,7 +42,7 @@ export default {
     }),
 
     onSubmit() {
-      const { email, pwd1, pwd2 } = this.credentials;
+      const { pwd1, pwd2 } = this.credentials;
 
       if (pwd1 === pwd2) {
         this.postCredentials(this.credentials);

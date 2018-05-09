@@ -1,20 +1,21 @@
 <template>
+<div>
   <div v-if="parseInt($route.params.id) != getQuestions.length + 1" key="question" class="question">
     <p  class="question_text">{{ getQuestions[$route.params.id-1].question.question }}</p>
     <button v-for="(response) in getQuestions[$route.params.id-1].responses" :key="response.id" @click="getResponse(getQuestions[$route.params.id-1].question.id, response.id, parseInt($route.params.id), getQuestions.length)"  class="purple">{{ response.response }}</button>
   </div>
-  <div v-else="parseInt($route.params.id) == getQuestions.length + 1" class="question final">
+  <div v-if="parseInt($route.params.id) == getQuestions.length + 1" class="question final">
     <p>Merci d’avoir pris le temps de répondre à ces questions, votre profil a été mis à jour.
 Vous pouvez maintenant trouver le vin qui vous correspond.</p>
     <button @click="storeUserResponses()" class="purple">Wine&Me</button>
+  </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import router from "../../router/index.js";
-import { mapGetters, mapState } from "vuex";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Question",
@@ -52,6 +53,8 @@ export default {
         response_id: response
       };
       this.setResponse(responseUser);
+
+      console.log(this.$store.state.questions.responseUser);
 
       router.push({
         name: "Question",

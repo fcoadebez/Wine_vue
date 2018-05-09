@@ -1,10 +1,10 @@
 <template>
   <div class="form questions">
     <div class="container">
-      <img v-if="this.$route.params.id != 1" @click="backQuestion" class="left_arrow" src="../assets/form/left-arrow.svg" alt="">
+      <img v-if="this.$route.params.id != 1" @click="backQuestion()" class="left_arrow" src="../assets/form/left-arrow.svg" alt="">
       <div class="logo">
         <img src="../assets/logo_simple.svg" alt="">
-        
+
       </div>
       <div class="intro">
         <p>dans l'aventure Wine&Me</p>
@@ -29,8 +29,7 @@ export default {
 
   data() {
     return {
-      questionsAll: "",
-      lastQuestion: ""
+      questionsAll: ""
     };
   },
   created() {
@@ -39,23 +38,18 @@ export default {
   computed: {
     ...mapState({ questions: state => state.questions.questions })
   },
-  mounted() {
-    // console.log(this.$localStorage.get("token"));
-  },
-  updated() {
-    if (typeof this.lastQuestion == "array") {
-      this.lastQuestion.splice(0, 1);
-    }
-    // console.log(this.lastQuestion.splice(0, 1));
-    this.lastQuestion = this.$store.state.questions.responseUser;
-  },
+  mounted() {},
   methods: {
     ...mapActions({
       getQuestions: "getQuestions"
     }),
 
     backQuestion() {
-      console.log(this.$route);
+      this.$store.state.questions.responseUser.splice(
+        this.$route.params.id - 2,
+        1
+      );
+
       router.push({
         name: "Question",
         params: { id: this.$route.params.id - 1 }

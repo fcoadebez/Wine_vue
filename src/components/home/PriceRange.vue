@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import router from "../../router/index.js";
 import vueSlider from "vue-slider-component";
 
 export default {

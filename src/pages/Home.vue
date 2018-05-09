@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import router from "../router/index.js";
 import Header from "@/components/home/Header";
 import AllWines from "@/components/home/search/AllWines";
 

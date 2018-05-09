@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import router from "@/router";
 
 const state = {
   user: ""

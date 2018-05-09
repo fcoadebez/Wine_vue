@@ -12,6 +12,15 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+      path: "/",
+      redirect: to => {
+        if (localStorage.getItem("token")) {
+          return "/question/1";
+        }
+        return "/login";
+      }
+    },
+    {
       path: "/signup",
       name: "Inscription",
       component: Inscription

@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import axios from "axios";
-import router from "@/router";
 
 const state = {
   questions: "",

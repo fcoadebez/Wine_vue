@@ -46,9 +46,7 @@ export default {
 
     onSubmit() {
       var email = "";
-      this.email != "" ? (email = this.email) : (email = this.localEmail);
-
-      const pwd = this.pwd;
+      this.email !== "" ? (email = this.email) : (email = this.localEmail);
 
       axios
         .post(process.env.baseUrl + "admin/api/login", {

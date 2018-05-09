@@ -12,7 +12,7 @@
           <p class="localisation">{{localisation}}</p>
         </div>
         <div class="tastes">
-          <div v-for="taste in tastes" class="taste">{{taste}}</div>
+          <div :key="taste" v-for="taste in tastes" class="taste">{{taste}}</div>
         </div>
       </div>
       <div class="right inline">
@@ -32,20 +32,26 @@
 </template>
 
 <script>
-import router from "../../router/index.js";
-
 export default {
   name: "WineItem",
   components: {},
-  props: ["domain", "localisation", "tastes", "fav", "drink", "red", "yellow", "purple", "price"],
+  props: [
+    "domain",
+    "localisation",
+    "tastes",
+    "fav",
+    "drink",
+    "red",
+    "yellow",
+    "purple",
+    "price"
+  ],
 
   data() {
-    return {
-    };
+    return {};
   },
   watch: {},
-  mounted() {
-  },
+  mounted() {},
   computed: {},
 
   methods: {}
@@ -55,7 +61,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .wine_item {
-  
   font-family: "Source Sans Pro", sans-serif;
   font-size: 14px;
   text-align: left;

@@ -21,33 +21,29 @@
 </template>
 
 <script>
-import router from "../../../router/index.js";
 import Title from "@/components/home/Title";
 import PriceRange from "@/components/home/PriceRange";
 import WineItem from "@/components/home/WineItem";
 
 export default {
   name: "AllWines",
-  components: {Title, PriceRange, WineItem},
+  components: { Title, PriceRange, WineItem },
   props: [],
 
   data() {
-    return {
-    };
+    return {};
   },
   watch: {},
-  mounted() {
-  },
+  mounted() {},
   computed: {},
 
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 a {
-    text-decoration: none;
-  }
+  text-decoration: none;
+}
 </style>
