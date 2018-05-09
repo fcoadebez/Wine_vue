@@ -2,9 +2,9 @@
   <div class="wine_item">
     <div class="container">
       <div class="wine inline">
-        <img v-if="red" class="wine_img" src="../../assets/wine/vin_rouge.svg" alt="">
-        <img v-if="yellow" class="wine_img" src="../../assets/wine/vin_jaune.svg" alt="">
-        <img v-if="purple" class="wine_img" src="../../assets/wine/vin_rose.svg" alt="">
+        <img v-if="color == 2" class="wine_img" src="../../assets/wine/vin_rouge.svg" alt="">
+        <img v-if="color == 1" class="wine_img" src="../../assets/wine/vin_jaune.svg" alt="">
+        <img v-if="color == 3" class="wine_img" src="../../assets/wine/vin_rose.svg" alt="">
       </div>
       <div class="description inline">
         <div class="title">
@@ -37,10 +37,12 @@ export default {
   components: {},
   props: [
     "domain",
+    "wine",
     "localisation",
     "tastes",
     "fav",
     "drink",
+    "color",
     "red",
     "yellow",
     "purple",

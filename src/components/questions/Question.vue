@@ -44,7 +44,8 @@ export default {
   methods: {
     ...mapActions({
       setResponse: "setResponse",
-      storeResponses: "storeResponses"
+      storeResponses: "storeResponses",
+      setWines: "setWines"
     }),
 
     getResponse(question, response, route, nbQuestions) {
@@ -53,8 +54,6 @@ export default {
         response_id: response
       };
       this.setResponse(responseUser);
-
-      console.log(this.$store.state.questions.responseUser);
 
       router.push({
         name: "Question",
@@ -69,8 +68,8 @@ export default {
           userId: this.getUser
         })
         .then(response => {
-          console.log(response);
           if (response.data.alert.type !== "fail") {
+            this.setWines(response.data.alert.wines);
             router.push({
               name: "Home",
               params: { subnav: "all" }

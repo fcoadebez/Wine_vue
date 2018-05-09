@@ -9,15 +9,18 @@
       </div>
     </div>
     <div class="description">
-      <div class="domain">Domaine de la Janasse</div>
-      <div class="localisation">Côtes-du-Rhône</div>
+      <div class="domain">{{$route.params.wine.domain}}</div>
+      <div class="localisation">{{$route.params.wine.name}}</div>
       <div class="wine">
+        <img v-if="this.$route.params.wine.wine_type_id == 2" class="bottle" src="../assets/wine/vin_rouge_fiche.svg" alt="">
+        <img v-if="this.$route.params.wine.wine_type_id == 1" class="bottle" src="../assets/wine/vin_jaune_fiche.svg" alt="">
+        <img v-if="this.$route.params.wine.wine_type_id == 3" class="bottle" src="../assets/wine/vin_rose_fiche.svg" alt="">
         <div class="more">
           <div class="user_action">
             <img src="../assets/wine/drink.svg" alt="">
             <img src="../assets/wine/no_fav.svg" alt="">
           </div>
-          <div class="price">30<span>€</span></div>
+          <div class="price">{{$route.params.wine.price}}<span>€</span></div>
         </div>
       </div>
       <div class="tastes">
@@ -26,12 +29,12 @@
         <div class="taste">Fort</div>
       </div>
       <div class="infos1">
-        <div class="info year">Année : <span>2015</span></div>
-        <div class="info country">Pays : <span>France</span></div>
+        <div class="info year">Année : <span>{{$route.params.wine.year}}</span></div>
+        <div class="info country">Pays : <span>{{$route.params.wine.country}}</span></div>
       </div>
       <div class="infos">
-        <div class="info name">Appelation : <span>Côtes-du-Rhône</span></div>
-        <div class="wine_description">Le Domaine de la Janasse est sans conteste une des références notables de la vallée du Rhône. En 20 ans, le domaine n’a cessé de progresser. La réussite de ce domaine est une réussite familiale car toute la famille Sabon y est investie.</div>
+        <div class="info name">Appelation : <span>{{$route.params.wine.name}}</span></div>
+        <div class="wine_description">{{$route.params.wine.description}}</div>
       </div>
       <router-link to="/wines/all"><button class="red">Retour</button></router-link>
     </div>
@@ -95,6 +98,9 @@ export default {
     font-weight: 600;
   }
   .wine {
+    .bottle {
+      width: 250px;
+    }
     position: relative;
     height: 260px;
     margin: 20px auto;
@@ -103,9 +109,6 @@ export default {
     box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     padding: 8px;
-    background-image: url("../assets/wine/vin_rouge_fiche.svg");
-    background-repeat: no-repeat;
-    background-position: center;
     .more {
       position: absolute;
       top: 0;
