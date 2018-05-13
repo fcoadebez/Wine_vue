@@ -2,7 +2,13 @@
   <div class="price_range">
     <div class="container">
       <p>Fourchette de prix</p>
-      <vue-slider v-model="value"></vue-slider>
+      <vue-slider ref="slider" v-model="value">
+        <template slot="tooltip" scope="tooltip">
+            <div class="custom-tooltip">
+              {{ tooltip.value }}
+            </div>
+          </template>
+      </vue-slider>
     </div>
   </div>
 </template>
@@ -79,6 +85,9 @@ export default {
   }
 }
 .disable_before {
-  display: none !important;
+  &::before {
+    content: none !important;
+    display: none !important;
+  }
 }
 </style>

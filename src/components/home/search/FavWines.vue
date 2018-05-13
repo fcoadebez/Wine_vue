@@ -1,10 +1,8 @@
 <template>
   <div class="all_wine">
     <div class="container">
-      <Title title="Mon Budget" subtitle="Mon budget" />
-      <PriceRange />
-      <Title title="Mes goûts" subtitle="Un vin selon mes goûts" />
-      <router-link :key="index" v-for="(wine, index) in this.wines" :to="{ name: 'Wine', params: { wine: wine }}">
+      <Title title="Mes favoris" subtitle="Mes favoris" />
+      <router-link :key="index" v-for="(wine, index) in this.wines" v-if="wine != undefined" :to="{ name: 'Wine', params: { wine: wine }}">
         <WineItem :wine="wine" :id="wine.id" :domain="wine.domain" :localisation="wine.name" :color="wine.wine_type_id" drink="false" :price="wine.price" :arome1="wine.arome1" :arome2="wine.arome2" :arome3="wine.arome3"/>
       </router-link>
     </div>
@@ -13,12 +11,11 @@
 
 <script>
 import Title from "@/components/home/Title";
-import PriceRange from "@/components/home/PriceRange";
 import WineItem from "@/components/home/WineItem";
 
 export default {
-  name: "AllWines",
-  components: { Title, PriceRange, WineItem },
+  name: "FavWines",
+  components: { Title, WineItem },
   props: [],
 
   data() {
@@ -27,9 +24,12 @@ export default {
     };
   },
   watch: {},
+  updated() {
+    this.wines = this.$store.state.wines.favWines;
+    console.log(this.wines);
+  },
   mounted() {
-    this.wines = this.$store.state.wines.wines;
-    console.log(this);
+    this.wines = this.$store.state.wines.favWines;
   },
   computed: {},
 

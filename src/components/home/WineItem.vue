@@ -12,16 +12,18 @@
           <p class="localisation">{{localisation}}</p>
         </div>
         <div class="tastes">
-          <div :key="taste" v-for="taste in tastes" class="taste">{{taste}}</div>
+          <!-- <div :key="taste" v-for="taste in tastes" class="taste">{{taste}}</div> -->
+          <div v-if="arome1 != ''" class="taste">{{arome1}}</div>
+          <div v-if="arome2 != ''" class="taste">{{arome2}}</div>
+          <div v-if="arome3 != ''" class="taste">{{arome3}}</div>
         </div>
       </div>
       <div class="right inline">
         <div class="user_action">
           <img v-if="drink == 'true'" class="user_img" src="../../assets/wine/drink.svg" alt="">
           <img v-else class="user_img" src="../../assets/wine/no_drink.svg" alt="">
-          
-          <img v-if="fav == 'true'" class="user_img" src="../../assets/wine/fav.svg" alt="">
-          <img v-else class="user_img" src="../../assets/wine/no_fav.svg" alt="">
+          <img @click="setUnfav(id, $event)" v-if="favorite == true" class="user_img" src="../../assets/wine/fav.svg" alt="">
+          <img @click="setFav(wine, $event)" v-else class="user_img" src="../../assets/wine/no_fav.svg" alt="">
         </div>
         <div class="price">
           {{price}}<span>€</span>
@@ -32,14 +34,21 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "WineItem",
   components: {},
   props: [
+    "id",
     "domain",
     "wine",
     "localisation",
     "tastes",
+    "arome1",
+    "arome2",
+    "arome3",
     "fav",
     "drink",
     "color",
@@ -50,13 +59,62 @@ export default {
   ],
 
   data() {
-    return {};
+    return {
+      favorite: false
+    };
   },
   watch: {},
-  mounted() {},
+  mounted() {
+    Array.prototype.map.call(this.$store.state.wines.favWines, (wine, id) => {
+      if (wine != undefined && id == this.id) {
+        this.favorite = true;
+      }
+    });
+  },
   computed: {},
 
-  methods: {}
+  methods: {
+    ...mapActions({
+      setFavWine: "setFavWine",
+      unFavWine: "unFavWine"
+    }),
+    setFav(wine, e) {
+      e.preventDefault();
+      this.favorite = true;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/fav", {
+          wine_id: wine.id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.setFavWine(wine);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    setUnfav(id, e) {
+      e.preventDefault();
+      this.favorite = false;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/unfav", {
+          wine_id: id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.unFavWine(id);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 
@@ -113,7 +171,7 @@ export default {
       align-items: center;
       img {
         width: 25px;
-        margin: 5px;
+        padding: 5px;
       }
     }
     .price {

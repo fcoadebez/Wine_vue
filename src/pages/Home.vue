@@ -3,6 +3,7 @@
     <Header />
     <div class="container">
       <AllWines v-if="$route.params.subnav == 'all'" />
+      <FavWines v-if="$route.params.subnav == 'fav'" />
     </div>
 
   </div>
@@ -11,10 +12,11 @@
 <script>
 import Header from "@/components/home/Header";
 import AllWines from "@/components/home/search/AllWines";
+import FavWines from "@/components/home/search/FavWines";
 
 export default {
   name: "Home",
-  components: { Header, AllWines },
+  components: { Header, AllWines, FavWines },
 
   data() {
     return {};

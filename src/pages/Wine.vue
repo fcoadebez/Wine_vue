@@ -24,9 +24,9 @@
         </div>
       </div>
       <div class="tastes">
-        <div class="taste">Boisé</div>
-        <div class="taste">Fruité</div>
-        <div class="taste">Fort</div>
+        <div v-if="this.$route.params.wine.arome1 != ''" class="taste">{{$route.params.wine.arome1}}</div>
+        <div v-if="this.$route.params.wine.arome2 != ''" class="taste">{{$route.params.wine.arome2}}</div>
+        <div v-if="this.$route.params.wine.arome3 != ''" class="taste">{{$route.params.wine.arome3}}</div>
       </div>
       <div class="infos1">
         <div class="info year">Année : <span>{{$route.params.wine.year}}</span></div>
