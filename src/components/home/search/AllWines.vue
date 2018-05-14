@@ -23,7 +23,8 @@ export default {
 
   data() {
     return {
-      wines: ""
+      wines: "",
+      value: this.$store.state.wines.range
     };
   },
   watch: {},
@@ -31,7 +32,11 @@ export default {
     this.wines = this.$store.state.wines.wines;
     console.log(this);
   },
-  computed: {},
+  computed: {
+    value() {
+      return this.$store.state.wines.range;
+    }
+  },
 
   methods: {}
 };

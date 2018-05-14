@@ -1,7 +1,9 @@
 /* eslint-disable no-shadow */
 const state = {
   wines: [],
-  favWines: []
+  allWines: [],
+  favWines: [],
+  range: []
 };
 
 const getters = {
@@ -9,14 +11,19 @@ const getters = {
 };
 
 const mutations = {
+  SET_ALL_WINES: (state, wines) => {
+    state.allWines = wines;
+  },
   SET_WINES: (state, wines) => {
     state.wines = wines;
   },
   SET_FAV_WINES: (state, wine) => {
     state.favWines[wine.id] = wine;
   },
+  SET_RANGE: (state, range) => {
+    state.range = range;
+  },
   UNFAV_WINES: (state, id) => {
-    console.log(id);
     state.favWines[id] = undefined;
   }
 };
@@ -24,6 +31,12 @@ const mutations = {
 const actions = {
   setWines: (context, wines) => {
     context.commit("SET_WINES", wines);
+  },
+  setAllWines: (context, wines) => {
+    context.commit("SET_ALL_WINES", wines);
+  },
+  setRange: (context, range) => {
+    context.commit("SET_RANGE", range);
   },
   setFavWine: (context, wine) => {
     context.commit("SET_FAV_WINES", wine);

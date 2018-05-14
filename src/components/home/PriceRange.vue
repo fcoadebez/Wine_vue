@@ -15,6 +15,7 @@
 
 <script>
 import vueSlider from "vue-slider-component";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Title",
@@ -26,7 +27,11 @@ export default {
       value: [15, 50]
     };
   },
-  watch: {},
+  watch: {
+    value(val) {
+      this.setRange(val);
+    }
+  },
   mounted() {
     this.$el.firstChild.children[1].children[0].children[3].style.backgroundImage =
       "linear-gradient(to bottom,#ba3353,#ac2a51,#9e214e,#8f184b,#810f47)";
@@ -64,7 +69,11 @@ export default {
   },
   computed: {},
 
-  methods: {}
+  methods: {
+    ...mapActions({
+      setRange: "setRange"
+    })
+  }
 };
 </script>
 

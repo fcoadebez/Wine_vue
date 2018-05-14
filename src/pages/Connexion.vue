@@ -41,7 +41,8 @@ export default {
 
   methods: {
     ...mapActions({
-      postUser: "postUser"
+      postUser: "postUser",
+      setAllWines: "setAllWines"
     }),
 
     onSubmit() {
@@ -55,6 +56,15 @@ export default {
         })
         .then(response => {
           if (response.data.alert.type !== "fail") {
+            axios
+              .get(process.env.baseUrl + "admin/api/wine/wines")
+              .then(response => {
+                console.log(response)
+                  this.setAllWines(response.data);
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
             this.postUser(response.data.alert.user.id);
             this.$localStorage.set("token", response.data.alert.token);
             router.push({
