@@ -3,11 +3,14 @@ const state = {
   wines: [],
   allWines: [],
   favWines: [],
+  drinkWines: [],
   range: []
 };
 
 const getters = {
-  getWines: state => state.wines
+  getWines: state => state.wines,
+  getFavWines: state => state.favWines,
+  getRange: state => state.range
 };
 
 const mutations = {
@@ -17,14 +20,33 @@ const mutations = {
   SET_WINES: (state, wines) => {
     state.wines = wines;
   },
-  SET_FAV_WINES: (state, wine) => {
-    state.favWines[wine.id] = wine;
-  },
+
   SET_RANGE: (state, range) => {
     state.range = range;
   },
+  SET_FAV_WINES: (state, wine) => {
+    state.favWines.push(wine);
+  },
   UNFAV_WINES: (state, id) => {
-    state.favWines[id] = undefined;
+    let newFavWines = [];
+    state.favWines.forEach((wine, index) => {
+      if (wine.id !== id) {
+        newFavWines.push(wine);
+      }
+    });
+    state.favWines = newFavWines;
+  },
+  SET_DRINK_WINES: (state, wine) => {
+    state.drinkWines.push(wine);
+  },
+  UNDRINK_WINES: (state, id) => {
+    let newDrinkWines = [];
+    state.favWines.forEach((wine, index) => {
+      if (wine.id !== id) {
+        newDrinkWines.push(wine);
+      }
+    });
+    state.drinkWines = newDrinkWines;
   }
 };
 
@@ -43,6 +65,12 @@ const actions = {
   },
   unFavWine: (context, id) => {
     context.commit("UNFAV_WINES", id);
+  },
+  setDrinkWine: (context, wine) => {
+    context.commit("SET_DRINK_WINES", wine);
+  },
+  unDrinkWine: (context, id) => {
+    context.commit("UNDRINK_WINES", id);
   }
 };
 

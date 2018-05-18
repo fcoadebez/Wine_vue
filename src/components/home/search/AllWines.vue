@@ -4,7 +4,7 @@
       <Title title="Mon Budget" subtitle="Mon budget" />
       <PriceRange />
       <Title title="Mes goûts" subtitle="Un vin selon mes goûts" />
-      <router-link :key="index" v-for="(wine, index) in this.wines" :to="{ name: 'Wine', params: { wine: wine }}">
+      <router-link :key="index" v-for="(wine, index) in this.wines" v-if="wine.price >= getRange[0] && wine.price <= getRange[1]" :to="{ name: 'Wine', params: { wine: wine }}">
         <WineItem :wine="wine" :id="wine.id" :domain="wine.domain" :localisation="wine.name" :color="wine.wine_type_id" drink="false" :price="wine.price" :arome1="wine.arome1" :arome2="wine.arome2" :arome3="wine.arome3"/>
       </router-link>
     </div>
@@ -15,6 +15,7 @@
 import Title from "@/components/home/Title";
 import PriceRange from "@/components/home/PriceRange";
 import WineItem from "@/components/home/WineItem";
+import { mapGetters } from "vuex";
 
 export default {
   name: "AllWines",
@@ -33,9 +34,9 @@ export default {
     console.log(this);
   },
   computed: {
-    value() {
-      return this.$store.state.wines.range;
-    }
+    ...mapGetters({
+      getRange: "getRange"
+    })
   },
 
   methods: {}

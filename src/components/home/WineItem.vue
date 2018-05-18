@@ -20,8 +20,8 @@
       </div>
       <div class="right inline">
         <div class="user_action">
-          <img v-if="drink == 'true'" class="user_img" src="../../assets/wine/drink.svg" alt="">
-          <img v-else class="user_img" src="../../assets/wine/no_drink.svg" alt="">
+          <img @click="setUndrink(id, $event)" v-if="drink == true" class="user_img" src="../../assets/wine/drink.svg" alt="">
+          <img @click="setDrink(wine, $event)" v-else class="user_img" src="../../assets/wine/no_drink.svg" alt="">
           <img @click="setUnfav(id, $event)" v-if="favorite == true" class="user_img" src="../../assets/wine/fav.svg" alt="">
           <img @click="setFav(wine, $event)" v-else class="user_img" src="../../assets/wine/no_fav.svg" alt="">
         </div>
@@ -50,7 +50,6 @@ export default {
     "arome2",
     "arome3",
     "fav",
-    "drink",
     "color",
     "red",
     "yellow",
@@ -60,13 +59,20 @@ export default {
 
   data() {
     return {
-      favorite: false
+      favorite: false,
+      drink: false
     };
   },
   watch: {},
   mounted() {
-    Array.prototype.map.call(this.$store.state.wines.favWines, (wine, id) => {
-      if (wine != undefined && id == this.id) {
+    this.$store.state.wines.drinkWines.forEach((wine, index) => {
+      if (wine.id === this.id) {
+        this.drink = true;
+      }
+    });
+
+    this.$store.state.wines.favWines.forEach((wine, index) => {
+      if (wine.id === this.id) {
         this.favorite = true;
       }
     });
@@ -76,7 +82,9 @@ export default {
   methods: {
     ...mapActions({
       setFavWine: "setFavWine",
-      unFavWine: "unFavWine"
+      unFavWine: "unFavWine",
+      setDrinkWine: "setDrinkWine",
+      unDrinkWine: "unDrinkWine"
     }),
     setFav(wine, e) {
       e.preventDefault();
@@ -108,6 +116,42 @@ export default {
         .then(response => {
           if (response.data.alert.type !== "fail") {
             this.unFavWine(id);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    setDrink(wine, e) {
+      e.preventDefault();
+      this.drink = true;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/drink", {
+          wine_id: wine.id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.setDrinkWine(wine);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    setUndrink(id, e) {
+      e.preventDefault();
+      this.drink = false;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/undrink", {
+          wine_id: id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.unDrinkWine(id);
           }
         })
         .catch(function(error) {

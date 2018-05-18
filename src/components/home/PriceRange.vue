@@ -24,7 +24,7 @@ export default {
 
   data() {
     return {
-      value: [15, 50]
+      value: [1, 99]
     };
   },
   watch: {
