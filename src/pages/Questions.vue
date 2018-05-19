@@ -2,6 +2,8 @@
   <div class="form questions">
     <div class="container">
       <img v-if="this.$route.params.id != 1" @click="backQuestion()" class="left_arrow" src="../assets/form/left-arrow.svg" alt="">
+      <img v-if="getReset == true" @click="disableReset()" class="left_arrow close" src="../assets/form/cancel.svg" alt="">
+      
       <div class="logo">
         <img src="../assets/logo_simple.svg" alt="">
 
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import router from "../router/index.js";
 import Range from "@/components/questions/Range";
 
@@ -29,7 +31,8 @@ export default {
 
   data() {
     return {
-      questionsAll: ""
+      questionsAll: "",
+      reset: this.$route.params.reset
     };
   },
   created() {
@@ -38,10 +41,18 @@ export default {
   computed: {
     ...mapState({ questions: state => state.questions.questions })
   },
-  mounted() {},
+  mounted() {
+    console.log(this);
+  },
+  computed: {
+    ...mapGetters({
+      getReset: "getReset"
+    })
+  },
   methods: {
     ...mapActions({
-      getQuestions: "getQuestions"
+      getQuestions: "getQuestions",
+      resetResponses: "resetResponses"
     }),
 
     backQuestion() {
@@ -53,6 +64,13 @@ export default {
       router.push({
         name: "Question",
         params: { id: this.$route.params.id - 1 }
+      });
+    },
+    disableReset() {
+      this.resetResponses();
+      router.push({
+        name: "Home",
+        params: { subnav: "all" }
       });
     }
   }
@@ -73,9 +91,13 @@ html {
     position: relative;
     .left_arrow {
       position: absolute;
-      width: 40px;
+      width: 25px;
       top: 50px;
       left: 30px;
+      &.close {
+        right: 30px;
+        left: unset;
+      }
     }
   }
 }

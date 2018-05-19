@@ -37,15 +37,19 @@ export default {
     ...mapGetters({
       getQuestions: "getQuestions",
       getResponses: "getResponses",
-      getUser: "getUser"
+      getUser: "getUser",
+      getReset: "getReset"
     })
   },
 
   methods: {
     ...mapActions({
       setResponse: "setResponse",
+      resetResponses: "resetResponses",
       storeResponses: "storeResponses",
-      setWines: "setWines"
+      setWines: "setWines",
+      setAllWines: "setAllWines",
+      setReset: "setReset"
     }),
 
     getResponse(question, response, route, nbQuestions) {
@@ -62,23 +66,53 @@ export default {
     },
 
     storeUserResponses() {
-      axios
-        .post(process.env.baseUrl + "admin/api/responses", {
-          responses: this.getResponses,
-          userId: this.getUser
-        })
-        .then(response => {
-          if (response.data.alert.type !== "fail") {
-            this.setWines(response.data.alert.wines);
-            router.push({
-              name: "Home",
-              params: { subnav: "all" }
-            });
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      if (this.getReset) {
+        axios
+          .post(process.env.baseUrl + "admin/api/responses", {
+            responses: this.getResponses,
+            userId: this.getUser,
+            reset: true
+          })
+          .then(response => {
+            if (response.data.alert.type !== "fail") {
+              this.resetResponses();
+              if (this.$store.state.wines.allWines.length == 0) {
+                this.setAllWines(response.data.alert.winesAll);
+              }
+              this.setWines(response.data.alert.wines);
+              router.push({
+                name: "Home",
+                params: { subnav: "all" }
+              });
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        axios
+          .post(process.env.baseUrl + "admin/api/responses", {
+            responses: this.getResponses,
+            userId: this.getUser,
+            reset: false
+          })
+          .then(response => {
+            if (response.data.alert.type !== "fail") {
+              this.resetResponses();
+              if (this.$store.state.wines.allWines.length == 0) {
+                this.setAllWines(response.data.alert.winesAll);
+              }
+              this.setWines(response.data.alert.wines);
+              router.push({
+                name: "Home",
+                params: { subnav: "all" }
+              });
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     }
   }
 };

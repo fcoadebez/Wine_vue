@@ -3,13 +3,15 @@ import axios from "axios";
 
 const state = {
   questions: "",
-  responseUser: []
+  responseUser: [],
+  reset: false
 };
 
 const getters = {
   getQuestionsLength: state => state.questions.length,
   getQuestions: state => state.questions,
-  getResponses: state => state.responseUser
+  getResponses: state => state.responseUser,
+  getReset: state => state.reset
 
   // this.stepSize = -12.5 * getQuestions.length;
 };
@@ -20,6 +22,12 @@ const mutations = {
   },
   SET_RESPONSE_USER: (state, response) => {
     state.responseUser.push(response);
+  },
+  RESET_RESPONSES_USER: state => {
+    state.responseUser = [];
+  },
+  SET_RESET: (state, value) => {
+    state.reset = value;
   }
 };
 
@@ -36,6 +44,12 @@ const actions = {
   },
   setResponse: (context, response) => {
     context.commit("SET_RESPONSE_USER", response);
+  },
+  resetResponses: context => {
+    context.commit("RESET_RESPONSES_USER");
+  },
+  setReset: (context, value) => {
+    context.commit("SET_RESET", value);
   }
 };
 

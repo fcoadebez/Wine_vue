@@ -10,7 +10,9 @@
           <input v-if="email == ''" v-model=localEmail type="text" name="email" class="input_form" placeholder="Email">
           <input v-model=pwd type="password" name="pwd" class="input_form" placeholder="Mot de passe">
         </div>
+        
         <button class="white">Connexion</button>
+        <p v-if="error">Adresse email ou mot de passe incorrect !</p>
       </form>
       <div class="bottom">
         <router-link to="signup">Pas encore de compte</router-link>
@@ -32,7 +34,8 @@ export default {
     return {
       msg: "Connexion",
       localEmail: "",
-      pwd: ""
+      pwd: "",
+      error: false
     };
   },
   computed: {
@@ -42,10 +45,15 @@ export default {
   methods: {
     ...mapActions({
       postUser: "postUser",
-      setAllWines: "setAllWines"
+      postEmail: "postEmail",
+      setAllWines: "setAllWines",
+      setWines: "setWines",
+      initFavWines: "initFavWines",
+      initDrinkWines: "initDrinkWines"
     }),
 
     onSubmit() {
+      this.error = false;
       var email = "";
       this.email !== "" ? (email = this.email) : (email = this.localEmail);
 
@@ -56,21 +64,28 @@ export default {
         })
         .then(response => {
           if (response.data.alert.type !== "fail") {
-            axios
-              .get(process.env.baseUrl + "admin/api/wine/wines")
-              .then(response => {
-                console.log(response)
-                  this.setAllWines(response.data);
-              })
-              .catch(function(error) {
-                console.log(error);
-              });
             this.postUser(response.data.alert.user.id);
+            this.postEmail(email);
             this.$localStorage.set("token", response.data.alert.token);
-            router.push({
-              name: "Question",
-              params: { id: 1 }
-            });
+
+            if (response.data.alert.profil === true) {
+              this.setAllWines(response.data.alert.winesAll);
+              this.setWines(response.data.alert.winesProfil);
+              this.initFavWines(response.data.alert.winesFav);
+              this.initDrinkWines(response.data.alert.winesDrink);
+
+              router.push({
+                name: "Home",
+                params: { subnav: "all" }
+              });
+            } else {
+              router.push({
+                name: "Question",
+                params: { id: 1 }
+              });
+            }
+          } else {
+            this.error = true;
           }
         })
         .catch(function(error) {
@@ -83,6 +98,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+p {
+  color: white;
+  font-weight: 600;
+}
 .logo {
   width: 100%;
   padding-top: 70px;

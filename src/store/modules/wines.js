@@ -24,6 +24,12 @@ const mutations = {
   SET_RANGE: (state, range) => {
     state.range = range;
   },
+  INIT_FAV_WINES: (state, wines) => {
+    state.favWines = wines;
+  },
+  INIT_DRINK_WINES: (state, wines) => {
+    state.drinkWines = wines;
+  },
   SET_FAV_WINES: (state, wine) => {
     state.favWines.push(wine);
   },
@@ -59,6 +65,12 @@ const actions = {
   },
   setRange: (context, range) => {
     context.commit("SET_RANGE", range);
+  },
+  initFavWines: (context, wines) => {
+    context.commit("INIT_FAV_WINES", wines);
+  },
+  initDrinkWines: (context, wines) => {
+    context.commit("INIT_DRINK_WINES", wines);
   },
   setFavWine: (context, wine) => {
     context.commit("SET_FAV_WINES", wine);

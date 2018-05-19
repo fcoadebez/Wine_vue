@@ -12,12 +12,12 @@
           <router-link to="/wines/fav">
             <img  v-bind:class="{ active: $route.params.subnav == 'fav'}" class="nav_item" src="../../assets/header/fav.svg" alt="">
           </router-link>
-          <router-link to="/account">
-            <img  v-bind:class="{ active: $route.name == 'Account'}" class="nav_item" src="../../assets/header/account.svg" alt="">
+          <router-link to="/wines/account">
+            <img  v-bind:class="{ active: $route.params.subnav == 'account'}" class="nav_item" src="../../assets/header/account.svg" alt="">
           </router-link>
         </div>
       </div>
-      <div v-if="$route.params.subnav != 'fav'" class="sub_nav">
+      <div v-if="$route.params.subnav != 'fav' && $route.params.subnav != 'account'" class="sub_nav">
         <div class="nav">
           <router-link to="/wines/food" v-bind:class="{ active: $route.params.subnav == 'food' }">Avec un plat</router-link>
         </div>
@@ -29,6 +29,11 @@
         </div>
       </div>
     </div>
+    <!-- <div class="deco">
+      <div class="deco_container">
+        Déconnexion
+      </div>
+    </div> -->
   </div>
 </template>
 

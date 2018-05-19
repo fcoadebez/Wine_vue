@@ -33,7 +33,7 @@ export default {
   text-transform: uppercase;
   text-align: left;
   position: relative;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 20px 0;
   .title {
     font-size: 40px;
     color: #f5f5f5;

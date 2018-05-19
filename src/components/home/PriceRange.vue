@@ -2,7 +2,7 @@
   <div class="price_range">
     <div class="container">
       <p>Fourchette de prix</p>
-      <vue-slider ref="slider" v-model="value">
+      <vue-slider ref="slider" v-model="value" :min="min" :max="max" width="calc(100%-20px)">
         <template slot="tooltip" scope="tooltip">
             <div class="custom-tooltip">
               {{ tooltip.value }}
@@ -20,11 +20,13 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "Title",
   components: { vueSlider },
-  props: [],
+  props: ["minVal", "maxVal"],
 
   data() {
     return {
-      value: [1, 99]
+      value: [],
+      min: 0,
+      max: 100
     };
   },
   watch: {
@@ -33,6 +35,15 @@ export default {
     }
   },
   mounted() {
+    let price = [];
+    this.wines = this.$store.state.wines.wines;
+    this.wines.forEach((wine, index) => {
+      price.push(wine.price);
+    });
+    this.min = Math.min.apply(null, price);
+    this.max = Math.max.apply(null, price);
+    this.value = [this.min, this.max];
+
     this.$el.firstChild.children[1].children[0].children[3].style.backgroundImage =
       "linear-gradient(to bottom,#ba3353,#ac2a51,#9e214e,#8f184b,#810f47)";
     this.$el.firstChild.children[1].children[0].style.height = "3px";

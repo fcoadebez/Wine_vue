@@ -17,8 +17,10 @@
         <img v-if="this.$route.params.wine.wine_type_id == 3" class="bottle" src="../assets/wine/vin_rose_fiche.svg" alt="">
         <div class="more">
           <div class="user_action">
-            <img src="../assets/wine/drink.svg" alt="">
-            <img src="../assets/wine/no_fav.svg" alt="">
+            <img @click="setUndrink($route.params.wine.id, $event)" v-if="drink == true" class="user_img" src="../assets/wine/drink.svg" alt="">
+            <img @click="setDrink($route.params.wine, $event)" v-else class="user_img" src="../assets/wine/no_drink.svg" alt="">
+            <img @click="setUnfav($route.params.wine.id, $event)" v-if="favorite == true" class="user_img" src="../assets/wine/fav.svg" alt="">
+            <img @click="setFav($route.params.wine, $event)" v-else class="user_img" src="../assets/wine/no_fav.svg" alt="">
           </div>
           <div class="price">{{$route.params.wine.price}}<span>€</span></div>
         </div>
@@ -36,24 +38,124 @@
         <div class="info name">Appelation : <span>{{$route.params.wine.name}}</span></div>
         <div class="wine_description">{{$route.params.wine.description}}</div>
       </div>
-      <router-link to="/wines/all"><button class="red">Retour</button></router-link>
+      <button @click="back()" class="red">Retour</button>
     </div>
 
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "Home",
   components: {},
 
   data() {
-    return {};
+    return {
+      drink: false,
+      favorite: false
+    };
   },
   created() {},
   computed: {},
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.$store.state.wines.drinkWines.forEach((wine, index) => {
+      if (wine.id === this.$route.params.wine.id) {
+        this.drink = true;
+      }
+    });
+
+    this.$store.state.wines.favWines.forEach((wine, index) => {
+      if (wine.id === this.$route.params.wine.id) {
+        this.favorite = true;
+      }
+    });
+  },
+  methods: {
+    back() {
+      this.$router.go(-1);
+    },
+    ...mapActions({
+      setFavWine: "setFavWine",
+      unFavWine: "unFavWine",
+      setDrinkWine: "setDrinkWine",
+      unDrinkWine: "unDrinkWine"
+    }),
+    setFav(wine, e) {
+      e.preventDefault();
+      this.favorite = true;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/fav", {
+          wine_id: wine.id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.setFavWine(wine);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    setUnfav(id, e) {
+      e.preventDefault();
+      this.favorite = false;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/unfav", {
+          wine_id: id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.unFavWine(id);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    setDrink(wine, e) {
+      e.preventDefault();
+      this.drink = true;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/drink", {
+          wine_id: wine.id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.setDrinkWine(wine);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    setUndrink(id, e) {
+      e.preventDefault();
+      this.drink = false;
+
+      axios
+        .post(process.env.baseUrl + "admin/api/wine/undrink", {
+          wine_id: id,
+          user_id: this.$store.state.user.user
+        })
+        .then(response => {
+          if (response.data.alert.type !== "fail") {
+            this.unDrinkWine(id);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 

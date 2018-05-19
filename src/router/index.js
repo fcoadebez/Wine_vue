@@ -51,6 +51,7 @@ export default new Router({
         {
           name: "Question",
           path: ":id",
+          props: { reset: false },
           component: Question
         }
       ]
